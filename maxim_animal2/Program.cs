@@ -1,57 +1,25 @@
-﻿abstract class Animal
+﻿public class Animal
 {
-    protected String name;
-    protected short amount;
-    protected short calories;
-    protected Animal(string name, short amount, short calories)
+    private String name;
+    private short amount;
+    private short calories;
+   public Animal(string name, short amount, short calories, List<Food> food)
     {
         this.name=name;
         this.amount=amount;
         this.calories=calories;
-    }
-
-    virtual public String getName() { return name; }
-    virtual public short getAmount() { return amount; }
-    virtual public short getCalories() { return calories; }
-}
-class Predator : Animal
-{
-    public Predator(string name, short amount, short calories, List<Food> food) : base(name, amount, calories)
-    {
         foreach (Food theFood in food)
         {
             theFood.increaseCaloriesNeeded(amount*calories/(food.Count));
         }
     }
 
-    
-
+    public String getName() { return name; }
+    public short getAmount() { return amount; }
+    public short getCalories() { return calories; }
 }
-class Herbivore : Animal
-{
 
-    public Herbivore(string name, short amount, short calories, List<Food> food) : base(name, amount, calories)
-    {
-        foreach (Food theFood in food)
-        {
-            theFood.increaseCaloriesNeeded(amount*calories/(food.Count));
-        }
-    }
-
-}
-class Omnivorous : Animal
-{
-
-    public Omnivorous(string name, short amount, short calories, List<Food> food) : base(name, amount, calories)
-    {
-        foreach (Food theFood in food)
-        {
-            theFood.increaseCaloriesNeeded(amount*calories/(food.Count));
-        }
-        
-    }
-}
-class Food
+public class Food
 {
     private String name;
     private short calories;
@@ -117,10 +85,10 @@ class testZoo
         Foods.Add(meat);
         Foods.Add(cabbage);
        
-        Omnivorous bear = new Omnivorous("Медведь", 1, 15000, new List<Food>(){ banana,meat,cabbage});
-        Predator lion = new Predator("Лев", 1, 10000, new List<Food>() { meat });
-       Predator monkey = new Predator("Обезьяна", 1, 1000, new List<Food>() { banana});
-       Predator donkey = new Predator("Осел", 1, 3000, new List<Food>() { banana, cabbage });
+        Animal bear = new ("Медведь", 1, 15000, new List<Food>(){ banana,meat,cabbage});
+        Animal lion = new ("Лев", 1, 10000, new List<Food>() { meat });
+        Animal monkey = new ("Обезьяна", 1, 1000, new List<Food>() { banana});
+        Animal donkey = new ("Осел", 1, 3000, new List<Food>() { banana, cabbage });
     
 
         int days = amountofdays();
