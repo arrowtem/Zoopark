@@ -66,7 +66,7 @@ class Food
     public float kgFood()
     {
         kgNeeded= (float)caloriesNeeded/calories;
-        return (float)Math.Round(kgNeeded, 1);
+        return kgNeeded;
     }
     public void increaseCaloriesNeeded(int amountCalories)
     {
@@ -78,11 +78,25 @@ class Food
 
 class testZoo
 {
-    static void calcFood(List<Food> food)
+    static int amountofdays()
+    {
+        Console.WriteLine("Введите цифру месяца: \n 1)Январь \n 2)Февраль \n 3)Март \n 4)Апрель \n 5)Май \n 6)Июнь \n 7)Июль\n 8)Август \n 9)Сентябрь \n 10)Октябрь \n 11)Ноябрь \n 12)Декабрь");
+        int month;
+        int days;
+        month = Convert.ToInt16(Console.ReadLine());
+        if (month == 4 || month == 6 || month == 9 || month == 11)
+            days = 30;
+        else if (month == 2)
+            days = 28;
+        else
+            days = 31;
+        return days;
+    }
+    static void calcFood(List<Food> food,int days)
     {
         foreach (Food theFood in food)
         {
-            Console.WriteLine("Надо " +theFood.kgFood()+ " килограмм "+theFood.getName());
+            Console.WriteLine("Надо " +Math.Round(theFood.kgFood()*days,1)+ " килограмм "+theFood.getName());
         }
     }
     static void Main()
@@ -96,6 +110,7 @@ class testZoo
         Omnivorous bear = new Omnivorous("Медведь", 1, 15000, meat, banana);
         Herbivore monkey = new Herbivore("Обезьяна", 1, 1000, banana);
         Herbivore goat = new Herbivore("Козел", 1, 3000, cabbage);
-        calcFood(Foods);
+        int days = amountofdays();
+        calcFood(Foods,days);
     }
 }
