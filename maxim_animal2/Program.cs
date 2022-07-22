@@ -16,31 +16,39 @@
 }
 class Predator : Animal
 {
-    public Predator(string name, short amount, short calories, Food food) : base(name, amount, calories)
+    public Predator(string name, short amount, short calories, List<Food> food) : base(name, amount, calories)
     {
-        food.increaseCaloriesNeeded(amount*calories);
+        foreach (Food theFood in food)
+        {
+            theFood.increaseCaloriesNeeded(amount*calories/(food.Count));
+        }
     }
 
-    public override short getAmount() { return amount; }
-    public override short getCalories() { return calories; }
+    
 
 }
 class Herbivore : Animal
 {
 
-    public Herbivore(string name, short amount, short calories, Food food) : base(name, amount, calories)
+    public Herbivore(string name, short amount, short calories, List<Food> food) : base(name, amount, calories)
     {
-        food.increaseCaloriesNeeded(amount*calories);
+        foreach (Food theFood in food)
+        {
+            theFood.increaseCaloriesNeeded(amount*calories/(food.Count));
+        }
     }
 
 }
 class Omnivorous : Animal
 {
 
-    public Omnivorous(string name, short amount, short calories, Food meat, Food plant) : base(name, amount, calories)
+    public Omnivorous(string name, short amount, short calories, List<Food> food) : base(name, amount, calories)
     {
-        meat.increaseCaloriesNeeded(amount*calories/2);
-        plant.increaseCaloriesNeeded(amount*calories/2);
+        foreach (Food theFood in food)
+        {
+            theFood.increaseCaloriesNeeded(amount*calories/(food.Count));
+        }
+        
     }
 }
 class Food
@@ -105,11 +113,16 @@ class testZoo
         Food banana = new("Банан", 960);
         Food meat = new("Мясо", 2400);
         Food cabbage = new("Капуста", 300);
-        Foods.Add(banana); Foods.Add(cabbage); Foods.Add(meat);
-        Predator lion = new Predator("Лев", 1, 10000, meat);
-        Omnivorous bear = new Omnivorous("Медведь", 1, 15000, meat, banana);
-        Herbivore monkey = new Herbivore("Обезьяна", 1, 1000, banana);
-        Herbivore goat = new Herbivore("Козел", 1, 3000, cabbage);
+        Foods.Add(banana);
+        Foods.Add(meat);
+        Foods.Add(cabbage);
+       
+        Omnivorous bear = new Omnivorous("Медведь", 1, 15000, new List<Food>(){ banana,meat,cabbage});
+        Predator lion = new Predator("Лев", 1, 10000, new List<Food>() { meat });
+       Predator monkey = new Predator("Обезьяна", 1, 1000, new List<Food>() { banana});
+       Predator donkey = new Predator("Осел", 1, 3000, new List<Food>() { banana, cabbage });
+    
+
         int days = amountofdays();
         calcFood(Foods,days);
     }
